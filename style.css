@@ -1,0 +1,10 @@
+.titulo{
+    text-align: center;
+    margin: 15px 5px;
+}
+
+.texto{
+    margin: 15px 10px;
+    text-align: justify;
+    color: rgb(39, 45, 63);
+}

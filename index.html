@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <div id="app">
+        <template>
+            <v-app id="inspire">
+                <v-navigation-drawer v-model="drawer" app>
+                    <h1 class="titulo">Info</h1>
+                    <h5 class="texto">Hola! esto es un CRUD que utiliza el CDN de Vue 2.0, un framework de JavaScript de código abierto para la construcción de interfaces de usuario y aplicaciones SPA, en conjunto con Vuetify framework que combina la potencia del popular VueJs con la estética de Material Design. Permite acelerar el desarrollo de aplicaciones web complejas, incorporando una gran cantidad de componentes visuales.</h5>
+                </v-navigation-drawer>
+
+                <v-app-bar app>
+                    <v-app-bar-nav-icon @click="drawer = !drawer">
+                    </v-app-bar-nav-icon>
+
+                    <v-toolbar-title>Operaciones CRUD (Vue+Vuetify)</v-toolbar-title>
+                </v-app-bar>
+
+                <v-main>
+                    <template>
+                        <v-data-table :headers="headers" :items="food" sort-by="calories" class="elevation-1" :items-per-page="5">
+                            <template v-slot:top>
+                                <v-toolbar flat>
+                                    <v-toolbar-title>Información nutricional</v-toolbar-title>
+                                    <v-divider class="mx-4" inset vertical></v-divider>
+                                    <v-spacer></v-spacer>
+                                    <v-dialog v-model="dialog" max-width="500px">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                                                Nuevo Registro
+                                            </v-btn>
+                                        </template>
+                                        <v-card>
+                                            <v-card-title>
+                                                <span class="text-h5">{{ formTitle }}</span>
+                                            </v-card-title>
+
+                                            <v-card-text>
+                                                <v-container>
+                                                    <v-row>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.name"
+                                                                label="Nombre del Alimento"></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.calories"
+                                                                label="Calorías"></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.fat" label="Grasa (g)">
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.carbs" label="Carbohidrato (g)">
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.protein"
+                                                                label="Proteina (g)"></v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                            </v-card-text>
+
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="blue darken-1" text @click="close">
+                                                    Cancelar
+                                                </v-btn>
+                                                <v-btn color="blue darken-1" text @click="save">
+                                                    Guardar
+                                                </v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                    <v-dialog v-model="dialogDelete" max-width="500px">
+                                        <v-card>
+                                            <v-card-title class="text-h5">Seguro que deseas eliminar el Alimento?
+                                            </v-card-title>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
+                                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">Eliminar</v-btn>
+                                                <v-spacer></v-spacer>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-toolbar>
+                            </template>
+                            <template v-slot:item.actions="{ item }">
+                                <v-icon small class="mr-2" @click="editItem(item)">
+                                    mdi-pencil
+                                </v-icon>
+                                <v-icon small @click="deleteItem(item)">
+                                    mdi-delete
+                                </v-icon>
+                            </template>
+                            <template v-slot:no-data>
+                                <v-btn color="primary" @click="initialize">
+                                    Resetear
+                                </v-btn>
+                            </template>
+                        </v-data-table>
+                    </template>
+                </v-main>
+            </v-app>
+        </template>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="vueCode.js"></script>
+</body>
+
+</html>
